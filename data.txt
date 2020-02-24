@@ -1,0 +1,12 @@
+INSERT INTO books(title, author, rating) 
+    VALUES 
+    ('Die Bienenhüterin', 'Sue Monk Kidd', 8),
+    ('Die Lilie im Tal', 'Balzac', 2),
+    ('Kleine Lichter','Roger Wilhelmsen', 9),
+    ('Afghanische Reise','Roger Wilhelmsen', 7),
+    ('Tokyo Love','HItomi Kanehara', 5),
+    ('Hard-boiled Hard Luck','Banana Yoshimoto', 6),
+    ('Kitchen','Banana Yoshimoto', 10),
+    ('Naokos Lächeln','Haruki Murakami', 7),
+    ('Aimée und Jaguar','Erica Fischer', 8),
+    ('Am grünen Rand der Welt','Thomas Hardy', 7);
