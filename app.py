@@ -143,6 +143,27 @@ def create_app(test_config=None):
             abort(405)
         # for testing POST: curl -X POST -H "Content-Type: application/json" -d '{"title":"Harry Potter", "author":"Joanne K. Rowling", "rating":"8"}' http://127.0.0.1:5000/books
 
+    @app.route('/books/search', methods=['POST'])
+    def search_book_title():
+        body = request.get_json()
+        search_term = body.get('search_term')
+
+        try:
+            suggestions = Book.query.filter(
+                Book.title.ilike(f'%{search_term}%')).all()
+
+            if not suggestions:
+                abort(404)
+
+            return jsonify({
+                'success': True,
+                'suggestions': paginate_books(suggestions),
+                'total_books': len(suggestions)
+            })
+        except:
+            abort(404)
+        # for testing: curl -X POST -H "Content-Type: application/json" -d '{"search_term":"an"}' http://127.0.0.1:5000/books/search
+
     @app.errorhandler(400)
     def bad_request(error):
         return jsonify({
