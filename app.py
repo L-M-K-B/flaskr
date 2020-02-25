@@ -18,7 +18,7 @@ def paginate_books(selection):
 
     return current_books
 
-##----------------##
+##--## -------- ##--##
 
 
 def create_app(test_config=None):
@@ -142,5 +142,29 @@ def create_app(test_config=None):
         except:
             abort(422)
         # for testing POST: curl -X POST -H "Content-Type: application/json" -d '{"title":"Harry Potter", "author":"Joanne K. Rowling", "rating":"8"}' http://127.0.0.1:5000/books
+
+    @app.errorhandler(400)
+    def bad_request(error):
+        return jsonify({
+            "success": False,
+            "error": 400,
+            "message": "bad request"
+        }), 400
+
+    @app.errorhandler(404)
+    def not_found(error):
+        return jsonify({
+            "success": False,
+            "error": 404,
+            "message": "resource not found"
+        }), 404
+
+    @app.errorhandler(422)
+    def unprocessable(error):
+        return jsonify({
+            "success": False,
+            "error": 422,
+            "message": "unprocessable"
+        }), 422
 
     return app
