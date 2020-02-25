@@ -91,7 +91,7 @@ def create_app(test_config=None):
             })
 
         except:
-            abort(404)
+            abort(400)
         # for testing PATCH: curl http://127.0.0.1:5000/books/10 -X PATCH -H "Content-Type: application/json" -d '{"rating":"9"}'
 
     @app.route('/books/<int:book_id>', methods=['DELETE'])
@@ -140,7 +140,7 @@ def create_app(test_config=None):
             })
 
         except:
-            abort(422)
+            abort(405)
         # for testing POST: curl -X POST -H "Content-Type: application/json" -d '{"title":"Harry Potter", "author":"Joanne K. Rowling", "rating":"8"}' http://127.0.0.1:5000/books
 
     @app.errorhandler(400)
@@ -158,6 +158,14 @@ def create_app(test_config=None):
             "error": 404,
             "message": "resource not found"
         }), 404
+
+    @app.errorhandler(405)
+    def not_found(error):
+        return jsonify({
+            "success": False,
+            "error": 405,
+            "message": "method not allowed"
+        }), 405
 
     @app.errorhandler(422)
     def unprocessable(error):
